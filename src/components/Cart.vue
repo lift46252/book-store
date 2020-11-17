@@ -1,79 +1,95 @@
 <template>
   <div>
-      <div id="order">
+    <div id="order">
       <h1>Your order</h1>
-      <b-button variant="outline-danger" @click="deleteAllBook">remove all<b-icon icon="trash"></b-icon></b-button>          
-      </div>
+      <b-button @click="deleteAllBook" variant="outline-danger"
+      >remove all
+        <b-icon icon="trash"/>
+      </b-button>
+    </div>
     <table id="cart-table">
-        <tr>
-            <th>#</th>
-            <th>item</th>
-            <th>count</th>
-            <th>total</th>
-            <th>action</th>
-        </tr>
-        <hr width="100%">
-        <tr v-for="item in getItemsCart" :key="item.id">
-            <td>{{item.id}}</td>
-            <td>{{item.title}}</td>
-            <td>{{item.countBook}}</td>
-            <td>${{item.price*item.countBook}}</td>
-            <td>
-                <b-button variant="outline-primary" @click="incrementBookCount(item.id)">
-                    <b-icon icon="plus-circle"></b-icon>
-                </b-button>
-                <b-button variant="outline-warning" @click="decrementBookCount(item.id)">
-                    <b-icon icon="patch-minus"></b-icon>
-                </b-button>
-                <b-button variant="outline-danger" @click="deleteOneBook(item.id)">
-                    <b-icon icon="trash"></b-icon>
-                </b-button>
-            </td>
-            <hr width="100%">
-        </tr>
-       
+      <tr>
+        <th>#</th>
+        <th>item</th>
+        <th>count</th>
+        <th>total</th>
+        <th>action</th>
+      </tr>
+      <tr :key="item.id" v-for="item in getItemsCart">
+        <td>{{ item.id }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.countBook }}</td>
+        <td>${{ item.price * item.countBook }}</td>
+        <td>
+          <b-button
+                  @click="incrementBookCount(item.id)"
+                  variant="outline-primary"
+          >
+            <b-icon icon="plus-circle"/>
+          </b-button>
+          <b-button
+                  @click="decrementBookCount(item.id)"
+                  variant="outline-warning"
+          >
+            <b-icon icon="patch-minus"/>
+          </b-button>
+          <b-button @click="deleteOneBook(item.id)" variant="outline-danger">
+            <b-icon icon="trash"/>
+          </b-button>
+        </td>
+      </tr>
     </table>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters,mapMutations} from "vuex"
-export default {
-    computed:mapGetters(['getItemsCart']),
-    methods:{
-     ...mapMutations(['deleteOneBook','decrementBookCount',"deleteAllBook"]),
-     ...mapActions(['incrementBookCount'])
-    }
-}
+  import {mapActions, mapGetters, mapMutations} from "vuex";
 
+  export default {
+    computed: mapGetters(["getItemsCart"]),
+    methods: {
+      ...mapMutations(["deleteOneBook", "decrementBookCount", "deleteAllBook"]),
+      ...mapActions(["incrementBookCount"])
+    }
+  };
 </script>
 
 <style>
-#cart-table{
+  #cart-table {
     width: 100%;
     height: auto;
     text-align: center;
     display: grid;
     justify-items: center;
-}
-@media (max-width:1200px) {
-    #cart-table{
-        width: 100%;
-        overflow: scroll;
+  }
+
+  @media (max-width: 1200px) {
+    #cart-table {
+      width: 100%;
+      overflow: scroll;
     }
-}
-#cart-table tr td,th{
+  }
+
+  #cart-table tr td,
+  th {
     padding: 10vh;
-}
-#order{
+  }
+
+  #cart-table tr {
+    border-bottom: 1px solid #ccc;
+  }
+
+  #order {
     width: 100%;
     display: flex;
     padding: 5px;
-}
-#order button{
+  }
+
+  #order button {
     margin-left: auto;
-}
-#order h1{
+  }
+
+  #order h1 {
     margin-right: auto;
-}
+  }
 </style>

@@ -1,52 +1,54 @@
 <template>
   <div>
-  <b-navbar toggleable="lg" type="dark" variant="info">
-    <router-link id="brand" to="/Home">
-        <b-icon icon="book"></b-icon>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <router-link :to="{ name: 'home' }" id="brand">
+        <b-icon icon="book"/>
         BookStore
-    </router-link>
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      </router-link>
+      <b-navbar-toggle target="nav-collapse"/>
 
-    <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
-            <router-link to="/Home">Home</router-link>
-      </b-navbar-nav>
-      <b-navbar-nav class="ml-auto">
-            <router-link to="/Cart">
-                <b-icon id="cart" icon="cart"></b-icon>
-                {{getItemsCounter}}items(${{getPrice}})
-            </router-link> 
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
-</div>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav class="ml-auto">
+          <router-link :to="{ name: 'cart' }">
+            <b-icon icon="cart" id="cart"/>
+            {{ getItemsCounter }}items(${{ getPrice }})
+          </router-link>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-export default {
-    computed:mapGetters(['getItemsCounter','getPrice'])
+  import {mapGetters} from "vuex";
 
-}
+  export default {
+    name: "Navbar",
+    computed: mapGetters(["getItemsCounter", "getPrice"])
+  };
 </script>
 
 <style>
-a{
+  a {
     color: white;
     font-size: 20px;
-}
-a:hover{
+  }
+
+  a:hover {
     color: white;
-}
-#cart{
-    font-size:30px;
-}
-#cart:hover{
-    font-size:32px;
-}
-#brand{
+  }
+
+  #cart {
+    font-size: 30px;
+  }
+
+  #cart:hover {
+    font-size: 32px;
+  }
+
+  #brand {
     font-size: 30px;
     width: auto;
-    margin: 0px 10px 0px 0px;
-}
+    margin: 0 10px 0 0;
+  }
 </style>
