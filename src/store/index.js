@@ -79,7 +79,7 @@ export default new Vuex.Store({
     },
     decrementBookCount(state, id) {
       state.items = state.items.map(book => {
-        if (book.id === id) {
+        if (book.id === id && book.countBook > 1) {
           book.countBook--;
           state.itemsCounter--;
           state.price -= book.price;
