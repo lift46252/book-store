@@ -5,6 +5,9 @@
         <b-icon icon="book"/>
         BookStore
       </router-link>
+      <router-link :to="{ name: 'add-book' }">
+        Add a Book
+      </router-link>
       <b-navbar-toggle target="nav-collapse"/>
 
       <b-collapse id="nav-collapse" is-nav>
@@ -30,7 +33,7 @@
 
 <style>
   a {
-    color: white;
+    color: white!important;
     font-size: 20px;
   }
 

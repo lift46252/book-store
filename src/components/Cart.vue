@@ -18,6 +18,9 @@
       <tr :key="item.id" v-for="item in getItemsCart">
         <td>{{ item.id }}</td>
         <td>{{ item.title }}</td>
+        <td>
+         <input type="number" :value="item.countBook" @input="setCountBook({value:$event.target.valueAsNumber,id:item.id})"> 
+        </td>
         <td>{{ item.countBook }}</td>
         <td>${{ item.price * item.countBook }}</td>
         <td>
@@ -43,13 +46,24 @@
 </template>
 
 <script>
-  import {mapActions, mapGetters, mapMutations} from "vuex";
+  import {mapActions, mapGetters, mapMutations, mapState} from "vuex";
 
   export default {
-    computed: mapGetters(["getItemsCart"]),
+    computed:{
+      ...mapGetters(["getItemsCart"]),
+      ...mapState(['countBook']),
+      // countThisBook:{
+      //     get(item){
+      //         return item.countBook
+      //     },
+      //     set(value,item){
+      //         this.setCountBook(value,item.id)
+      //     }
+      // }, 
+    } ,
     methods: {
       ...mapMutations(["deleteOneBook", "decrementBookCount", "deleteAllBook"]),
-      ...mapActions(["incrementBookCount"])
+      ...mapActions(["incrementBookCount","setCountBook"])
     }
   };
 </script>

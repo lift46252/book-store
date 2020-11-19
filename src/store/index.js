@@ -30,7 +30,13 @@ export default new Vuex.Store({
     ],
     items: [],
     itemsCounter: 0,
-    price: 0
+    price: 0,
+    addTitle:'',
+    addAuthor:'',
+    addPrice:0,
+    addImage:'',
+    oldPrice:0,
+    oldCountBook:0
   },
   getters: {
     getData(state) {
@@ -47,35 +53,32 @@ export default new Vuex.Store({
     },
     getCountBook(state) {
       return state.countBook;
-    }
+    },
   },
   mutations: {
     countItem(state) {
       return state.itemsCounter++;
     },
+    setCountItem(state,value){
+      return state.itemsCounter += value.value - value.old;
+    },
     totalPrice(state, value) {
       return (state.price += value);
+    },
+    setTotalPrice(state,value){
+      return (state.price += value.value.price * (value.value.countBook - value.old));
     },
     addItems(state, values) {
       values.countBook = 1;
       state.items = state.items.concat([values]);
     },
     incrementBook(state, id) {
-      const itemIdx = state.items.findIndex(item => id === item.id);
-      state.items = [
-        ...state.items.slice(0, itemIdx),
-        {
-          ...state.items[itemIdx],
-          countBook: state.items[itemIdx].countBook + 1
-        },
-        ...state.items.slice(itemIdx + 1)
-      ];
-      state.items = state.items.map(book => {
+      state.items = state.items.map((book)=>{
         if (book.id === id) {
-          book.countBook++;
+            book.countBook++
         }
-        return book;
-      });
+        return book
+      })
     },
     decrementBookCount(state, id) {
       state.items = state.items.map(book => {
@@ -103,6 +106,18 @@ export default new Vuex.Store({
       state.itemsCounter = 0;
       state.price = 0;
       state.items = [];
+    },
+    getTitle(state,value){
+      return state.addTitle = value
+    },
+    getAuthor(state,value){
+      return state.addAuthor = value
+    },
+    getAddPrice(state,value){
+      return state.addPrice = Number(value)
+    },
+    getImage(state,value){
+      return state.addImage = value
     }
   },
   actions: {
@@ -127,6 +142,30 @@ export default new Vuex.Store({
         }
         return book;
       });
-    }
+    },
+    setCountBook({state,commit},obj) {
+      state.items = state.items.map(book => {
+        if (book.id === obj.id && obj.value > 0 ) {        
+          state.oldCountBook = book.countBook
+          book.countBook = obj.value;            
+          commit("setCountItem",{value:obj.value,old:state.oldCountBook});
+          commit("setTotalPrice",{value:book,old:state.oldCountBook});  
+        }
+        return book;
+      });
+    },
+    addBook({state}){
+      const value = {
+        id: state.data[state.data.length - 1].id + 1,
+        title: state.addTitle,
+        author: state.addAuthor,
+        price: state.addPrice,
+        cover: state.addImage
+        
+      }
+      state.data.push(value)
+      alert('Succes')
+    }    
   }
+
 });
