@@ -1,20 +1,20 @@
 <template>
   <b-form action="#" @submit.prevent="addBook()">
-      <label for="title">
+      <label>
         <p>Title of Book :</p>
-        <b-form-input  id="title" type="text" v-model="title"></b-form-input>
+        <b-form-input type="text" v-model="title"/>
       </label>
-      <label for="author">
+      <label>
         <p>Author of Book :</p>
-        <b-form-input  id="author" type="text" v-model="author"></b-form-input>
+        <b-form-input type="text" v-model="author"/>
       </label>
-        <label for="price">
+        <label>
         <p>Price of Book :</p>
-        <b-form-input  id="price" type="number" v-model="price"></b-form-input>
+        <b-form-input type="number" v-model="price"/>
       </label>
-        <label for="url-image">
+        <label>
         <p>Image of Book (URL):</p>
-        <b-form-input  id="url-image" type="url" v-model="image"></b-form-input>
+        <b-form-input type="url" v-model="image"/>
       </label>
       <b-button variant="primary" type="submit">Submit</b-button>
   </b-form>
@@ -26,7 +26,12 @@ export default {
     name:'add-book',
     methods:{
       ...mapActions(['addBook']),  
-      ...mapMutations(['getTitle','getAuthor','getAddPrice','getImage']) ,
+      ...mapMutations({
+          setTitle:'setTitle',
+          setAuthor:'setAuthor',
+          setAddPrice:'setAddPrice',
+          setImage:'setImage'
+          }) ,
     },
     computed:{
        ...mapState(['addTitle','addAuthor','addPrice','addImage']),
@@ -35,7 +40,7 @@ export default {
                return this.addTitle
            },
            set(value){
-               this.getTitle(value)
+               this.setTitle(value)
            }
        },
        author:{
@@ -43,7 +48,7 @@ export default {
                return this.addAuthor
            },
            set(value){
-               this.getAuthor(value)
+               this.setAuthor(value)
            }
        },
        image:{
@@ -51,7 +56,7 @@ export default {
                return this.addImage
            },
            set(value){
-               this.getImage(value)
+               this.setImage(value)
            }
        },    
        price:{
@@ -59,7 +64,7 @@ export default {
                return this.addPrice
            },
            set(value){
-               this.getAddPrice(value)
+               this.setAddPrice(value)
            }
        }, 
     }
@@ -72,8 +77,5 @@ form{
     justify-items: center;
     width: 200px;
     margin: 0 auto;
-}
-form button{
-
 }
 </style>

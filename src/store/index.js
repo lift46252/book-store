@@ -107,16 +107,16 @@ export default new Vuex.Store({
       state.price = 0;
       state.items = [];
     },
-    getTitle(state,value){
+    setTitle(state,value){
       return state.addTitle = value
     },
-    getAuthor(state,value){
+    setAuthor(state,value){
       return state.addAuthor = value
     },
-    getAddPrice(state,value){
+    setAddPrice(state,value){
       return state.addPrice = Number(value)
     },
-    getImage(state,value){
+    setImage(state,value){
       return state.addImage = value
     }
   },
